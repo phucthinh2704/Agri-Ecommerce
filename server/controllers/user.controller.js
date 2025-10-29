@@ -6,73 +6,133 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { generateAccessToken, generateRefreshToken } = require("../utils/jwt");
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
+// Login with Google khi dùng useGoogleLogin (client-side)
 const googleLogin = asyncHandler(async (req, res) => {
-	const { credentialToken } = req.body; // token từ @react-oauth/google
+  const { accessToken } = req.body;
 
-	if (!credentialToken) {
-		return res
-			.status(400)
-			.json({ success: false, message: "Missing Google credential" });
-	}
+  if (!accessToken) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Missing Google access token" });
+  }
 
-	try {
-		// Xác minh token với Google
-		const ticket = await client.verifyIdToken({
-			idToken: credentialToken,
-			audience: process.env.GOOGLE_CLIENT_ID,
-		});
-		const payload = ticket.getPayload();
+  try {
+    // Gọi Google API để lấy profile bằng fetch
+    const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
 
-		// Lấy thông tin từ Google
-		const { email, name, picture, sub } = payload;
+    if (!response.ok) {
+      throw new Error("Failed to fetch Google userinfo");
+    }
 
-		// Kiểm tra user có tồn tại chưa
-		let user = await User.findOne({ email });
+    const profile = await response.json();
+    const { email, name, picture, sub } = profile;
 
-		// Nếu chưa có, tạo tài khoản mới
-		if (!user) {
-			user = await User.create({
-				name,
-				email,
-				googleId: sub,
-				avatar: picture,
-				password_hash: null, // không cần password
-			});
-		} else if (!user.googleId) {
-			// Nếu user tồn tại nhưng chưa liên kết Google, cập nhật luôn
-			user.googleId = sub;
-			user.avatar = user.avatar || picture; // chỉ cập nhật avatar nếu chưa có
-			await user.save();
-		}
+    // Tìm hoặc tạo user
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        googleId: sub,
+        avatar: picture,
+        password_hash: null,
+      });
+    } else if (!user.googleId) {
+      user.googleId = sub;
+      user.avatar = user.avatar || picture;
+      await user.save();
+    }
 
-		// Tạo token
-		const accessToken = generateAccessToken(user._id, user.role);
-		const refreshToken = generateRefreshToken(user._id);
+    // Tạo token
+    const accessTokenJWT = generateAccessToken(user._id, user.role);
+    const refreshToken = generateRefreshToken(user._id);
 
-		user.refreshToken = refreshToken;
-		await user.save();
+    user.refreshToken = refreshToken;
+    await user.save();
 
-		return res.json({
-			success: true,
-			message: "Google login success",
-			accessToken,
-			refreshToken,
-			user,
-		});
-	} catch (error) {
-		console.error("Google login error:", error);
-		return res
-			.status(401)
-			.json({ success: false, message: "Invalid Google credential" });
-	}
+    return res.json({
+      success: true,
+      message: "Google login success",
+      accessToken: accessTokenJWT,
+      refreshToken,
+      user,
+    });
+  } catch (error) {
+    console.error("Google login error:", error);
+    return res
+      .status(401)
+      .json({ success: false, message: "Invalid Google token" });
+  }
 });
 
-const register = asyncHandler(async (req, res) => {
-	const { name, email, password } = req.body;
+// Login with Google khi dùng GoogleLogin (client-side)
+// const googleLogin = asyncHandler(async (req, res) => {
+// 	const { credentialToken } = req.body;
+// 	console.log(req.body);
+// 	if (!credentialToken) {
+// 		return res
+// 			.status(400)
+// 			.json({ success: false, message: "Missing Google credential" });
+// 	}
 
-	if (!name || !email || !password)
+// 	try {
+// 		// Xác minh token với Google
+// 		const ticket = await client.verifyIdToken({
+// 			idToken: credentialToken,
+// 			audience: process.env.GOOGLE_CLIENT_ID,
+// 		});
+// 		const payload = ticket.getPayload();
+
+// 		// Lấy thông tin từ Google
+// 		const { email, name, picture, sub } = payload;
+
+// 		// Kiểm tra user có tồn tại chưa
+// 		let user = await User.findOne({ email });
+
+// 		// Nếu chưa có, tạo tài khoản mới
+// 		if (!user) {
+// 			user = await User.create({
+// 				name,
+// 				email,
+// 				googleId: sub,
+// 				avatar: picture,
+// 				password_hash: null, // không cần password
+// 			});
+// 		} else if (!user.googleId) {
+// 			// Nếu user tồn tại nhưng chưa liên kết Google, cập nhật luôn
+// 			user.googleId = sub;
+// 			user.avatar = user.avatar || picture; // chỉ cập nhật avatar nếu chưa có
+// 			await user.save();
+// 		}
+
+// 		// Tạo token
+// 		const accessToken = generateAccessToken(user._id, user.role);
+// 		const refreshToken = generateRefreshToken(user._id);
+
+// 		user.refreshToken = refreshToken;
+// 		await user.save();
+
+// 		return res.json({
+// 			success: true,
+// 			message: "Google login success",
+// 			accessToken,
+// 			refreshToken,
+// 			user,
+// 		});
+// 	} catch (error) {
+// 		console.error("Google login error:", error);
+// 		return res
+// 			.status(401)
+// 			.json({ success: false, message: "Invalid Google credential" });
+// 	}
+// });
+
+const register = asyncHandler(async (req, res) => {
+	const { name, phone, email, password } = req.body;
+
+	if (!name || !phone || !email || !password)
 		return res
 			.status(400)
 			.json({ success: false, message: "Missing inputs" });
@@ -84,7 +144,7 @@ const register = asyncHandler(async (req, res) => {
 			.json({ success: false, message: "Email already exists" });
 
 	const password_hash = await bcrypt.hash(password, 10);
-	const newUser = await User.create({ name, email, password_hash });
+	const newUser = await User.create({ name, phone, email, password_hash });
 
 	return res.status(201).json({
 		success: true,
@@ -131,7 +191,16 @@ const login = asyncHandler(async (req, res) => {
 		message: "Login success",
 		accessToken,
 		refreshToken,
-		user,
+		user: {
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			avatar: user.avatar,
+			role: user.role,
+			phone: user.phone,
+			address: user.address,
+			refreshToken: user.refreshToken,
+		},
 	});
 });
 

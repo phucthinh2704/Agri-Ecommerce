@@ -5,7 +5,7 @@ var productSchema = new mongoose.Schema(
 		name: { type: String, required: true, trim: true },
 		slug: { type: String, required: true, unique: true, lowercase: true },
 		description: { type: String, default: "" },
-		category: { type: String, required: true }, // lua | xoai
+		category: { type: String, required: true },
 		price: { type: Number, required: true },
 		unit: { type: String, default: "kg" },
 		stock: { type: Number, default: 0 },

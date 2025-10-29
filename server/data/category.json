@@ -1,0 +1,44 @@
+[
+	{
+		"name": "Rau củ",
+		"slug": "vegetables",
+		"description": "Khám phá bộ sưu tập rau xanh mơn mởn, được tuyển chọn kỹ lưỡng từ các nông trại an toàn. Từ rau ăn lá (cải, xà lách) đến các loại củ quả (cà chua, dưa leo, bí đao), chúng tôi cam kết mang đến nguồn dinh dưỡng tươi ngon nhất cho món canh, xào, luộc hay salad của gia đình bạn.",
+		"image": "https://res.cloudinary.com/ddfi4fdao/image/upload/v1761563932/raumuong_sppwtq.png"
+	},
+	{
+		"name": "Củ, khoai, sắn",
+		"slug": "tubers",
+		"description": "Nguồn tinh bột tự nhiên, béo bùi và giàu năng lượng. Danh mục này bao gồm khoai lang mật dẻo ngọt, khoai tây Đà Lạt bở tơi, khoai môn bùi béo và củ dền đỏ mọng. Hoàn hảo cho các món hầm, nướng, chiên, hay nấu canh súp bổ dưỡng.",
+		"image": "https://res.cloudinary.com/ddfi4fdao/image/upload/v1761752415/cusan1_ppx3rr.jpg"
+	},
+	{
+		"name": "Trái cây",
+		"slug": "fruits",
+		"description": "Thưởng thức vị ngọt tự nhiên, mọng nước từ bộ sưu tập trái cây tuyển chọn. Chúng tôi ưu tiên các loại trái cây đúng mùa (xoài, bưởi, cam sành) và trái cây nhập khẩu (táo, lê, nho) chất lượng cao. Giàu vitamin và khoáng chất, hoàn hảo cho món tráng miệng, nước ép, hay sinh tố thanh mát.",
+    "image": "https://res.cloudinary.com/ddfi4fdao/image/upload/v1761731218/lehq2_ue2nku.jpg"
+	},
+	{
+		"name": "Rau thơm & thảo mộc",
+		"slug": "herbs",
+		"description": "Là 'linh hồn' của gian bếp Việt. Danh mục này cung cấp đầy đủ các loại rau gia vị giúp món ăn dậy mùi thơm đặc trưng: từ hành, ngò, thì là, sả, gừng để ướp và nêm nếm, đến húng quế, tía tô, kinh giới... để ăn kèm, khử tanh, tăng thêm hương vị cho các món bún, phở và lẩu.",
+    "image": "https://res.cloudinary.com/ddfi4fdao/image/upload/v1761668806/hunglui3_r2iuoe.jpg"
+	},
+	{
+		"name": "Nấm các loại",
+		"slug": "mushrooms",
+		"description": "Nguồn protein thực vật tuyệt vời, nổi bật với vị ngọt thanh và kết cấu dai giòn. Khám phá sự đa dạng từ nấm rơm búp, nấm bào ngư xám, nấm kim châm... đến nấm đông cô thơm lừng. Phù hợp cho cả món chay lẫn món mặn, là nguyên liệu hoàn hảo cho các món xào, nhúng lẩu, hay nấu súp.",
+    "image": "https://res.cloudinary.com/ddfi4fdao/image/upload/v1761576647/namdongco1_c0bb0r.jpg"
+	},
+	{
+		"name": "Ngũ cốc & hạt",
+		"slug": "grains",
+		"description": "Nguồn năng lượng và dinh dưỡng thiết yếu cho lối sống lành mạnh. Danh mục bao gồm các loại gạo thượng hạng (ST25, Gạo lứt), các loại đậu truyền thống (đậu xanh, đậu đen, đậu nành) và các loại hạt dinh dưỡng (mè đen, hạt sen...). Hoàn hảo để nấu cơm, nấu chè, và làm sữa hạt bổ dưỡng.",
+    "image": "https://res.cloudinary.com/ddfi4fdao/image/upload/v1761733190/dn1_cyyfg1.jpg"
+	},
+	{
+		"name": "Trứng",
+		"slug": "eggs",
+		"description": "Nguồn protein tươi mới, tiện lợi cho mọi bữa ăn. Chúng tôi cung cấp đa dạng từ trứng gà ta thả vườn (lòng đỏ đậm, béo ngậy) đến trứng gà công nghiệp, trứng vịt sạch đã qua kiểm dịch. Lựa chọn lý tưởng cho bữa sáng nhanh gọn, món chiên, kho, hay làm bánh.",
+    "image": "https://res.cloudinary.com/ddfi4fdao/image/upload/v1761568972/trung4_rcvcw7.jpg"
+	}
+]

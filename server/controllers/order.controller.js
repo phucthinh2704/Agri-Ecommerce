@@ -45,7 +45,7 @@ const createOrder = asyncHandler(async (req, res) => {
 		await cart.deleteOne();
 	}
 
-	// ✅ Calculate shipping fee
+	// Calculate shipping fee
 	let shippingFee = 0;
 	if (orderTotal < FREE_SHIP_THRESHOLD) {
 		shippingFee = SHIPPING_FEE;
@@ -53,7 +53,7 @@ const createOrder = asyncHandler(async (req, res) => {
 
 	const finalTotal = orderTotal + shippingFee;
 
-	// ✅ Decrease stock and increase sold count
+	// Decrease stock and increase sold count
 	for (const item of orderItems) {
 		const product = await Product.findById(item.product_id);
 		if (!product) {

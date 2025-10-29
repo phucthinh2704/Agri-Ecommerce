@@ -31,7 +31,13 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
 	// Tạo query filter
 	let query = {};
-	if (category) query.category = category;
+	// if (category) query.category = category;
+	if (category) {
+		// Biến query string "slug1,slug2,slug3" thành mảng [slug1, slug2, slug3]
+		const categoryArray = category.split(",");
+		// Dùng $in của MongoDB để tìm sản phẩm có category nằm TRONG mảng đó
+		query.category = { $in: categoryArray };
+	}
 	if (search) query.name = { $regex: search, $options: "i" };
 
 	// Xử lý sort
