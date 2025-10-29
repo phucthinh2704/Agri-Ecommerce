@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./auth/authSlice";
+import cartReducer from "./cart/cartSlice";
 import {
 	persistStore,
 	persistReducer,
@@ -14,12 +15,13 @@ import storage from "redux-persist/lib/storage"; // lưu ở localStorage
 
 const rootReducer = combineReducers({
 	auth: authReducer,
+	cart: cartReducer,
 });
 
 const persistConfig = {
-	key: "root",
+	key: "root/nongsan",
 	storage,
-	whitelist: ["auth"], // chỉ persist auth
+	whitelist: ["auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

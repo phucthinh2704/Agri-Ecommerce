@@ -8,10 +8,12 @@ const instance = axios.create({
 instance.interceptors.request.use(
 	function (config) {
 		// Do something before request is sent
-		const localStorageData = JSON.parse(window.localStorage.getItem("persist:root")) || {};
-		if (localStorageData.auth.accessToken != null) {
-			const accessToken = JSON.parse(localStorageData.auth.accessToken);
-			config.headers = { authorization: `${accessToken}` };
+		const localStorageData = JSON.parse(window.localStorage.getItem("persist:root/nongsan")) || {};
+		// console.log(localStorageData)
+		const userAuth = JSON.parse(localStorageData.auth);
+		if (userAuth.accessToken != null) {
+			const accessToken = userAuth.accessToken;
+			config.headers = { authorization: `Bearer ${accessToken}` };
 			return config;
 		}
 		return config;

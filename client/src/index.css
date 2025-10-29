@@ -1,1 +1,30 @@
 @import "tailwindcss";
+@layer base {
+	*,
+	*::before,
+	*::after {
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+	}
+}
+
+input,
+textarea,
+select {
+	@apply border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+
+article ol {
+	list-style: decimal;
+	padding-left: 1.25rem;
+	margin: 0.5rem 0;
+}
+article ul {
+	list-style: disc;
+	padding-left: 1.25rem;
+	margin: 0.5rem 0;
+}
+article li + li {
+	margin-top: 0.25rem;
+}
