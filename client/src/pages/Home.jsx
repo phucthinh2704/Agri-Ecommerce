@@ -8,7 +8,9 @@ import {
 	CategorySection,
 	HeroSection,
 	ProductSection,
+	MapSection
 } from "../components";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
@@ -16,6 +18,8 @@ const Home = () => {
 	const [newProducts, setNewProducts] = useState([]);
 	const [bestSellers, setBestSellers] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		loadData();
@@ -59,8 +63,7 @@ const Home = () => {
 	};
 
 	const handleCategoryClick = (category) => {
-		console.log("Category clicked:", category);
-		// Navigate to category page
+		navigate(`/category/${category.slug}`);
 	};
 
 	if (loading) {
@@ -123,6 +126,9 @@ const Home = () => {
 
 				{/* About Section */}
 				<AboutSection />
+
+				{/* Map Section */}
+				<MapSection />
 
 				{/* Blog Section */}
 				<BlogSection />

@@ -16,7 +16,8 @@ import { apiLogin, apiRegister } from "../api/auth";
 import { GoogleButton } from "../components";
 import useAlert from "../hooks/useAlert";
 import { loginSuccess } from "../store/auth";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import path from "../utils/path";
 
 const LoginFarmAuth = () => {
 	const [isLogin, setIsLogin] = useState(true);
@@ -34,6 +35,10 @@ const LoginFarmAuth = () => {
 	const [errors, setErrors] = useState({});
 	const { showSuccess, showError } = useAlert();
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const fromPath = location.state?.from || path.HOME;
 
 	const handleInputChange = (e) => {
 		const { name, value, type, checked } = e.target;
@@ -83,59 +88,59 @@ const LoginFarmAuth = () => {
 		if (!validateForm()) return;
 
 		setIsLoading(true);
+
 		setTimeout(async () => {
-			if (isLogin) {
-				const res = await apiLogin({
-					email: formData.email,
-					password: formData.password,
-				});
+			(async () => {
+				if (isLogin) {
+					const res = await apiLogin({
+						email: formData.email,
+						password: formData.password,
+					});
 
-				if (res.success) {
-					// console.log(res)
-					dispatch(
-						loginSuccess({
-							user: res.user,
-							accessToken: res.accessToken,
-							refreshToken: res.refreshToken,
-						})
-					);
-					showSuccess("Đăng nhập thành công");
+					if (res.success) {
+						console.log("Navigate:", fromPath)
+						navigate(fromPath, { replace: true });
+						dispatch(
+							loginSuccess({
+								user: res.user,
+								accessToken: res.accessToken,
+								refreshToken: res.refreshToken,
+							})
+						);
+						showSuccess("Đăng nhập thành công");
+					} else {
+						showError(
+							res.message ||
+								"Đăng nhập thất bại. Vui lòng thử lại."
+						);
+						setIsLoading(false);
+					}
 				} else {
-					showError(
-						res.message || "Đăng nhập thất bại. Vui lòng thử lại."
-					);
+					const res = await apiRegister({
+						email: formData.email,
+						password: formData.password,
+						name: formData.fullName,
+						phone: formData.phone,
+					});
+					if (res.success) {
+						showSuccess("Đăng ký tài khoản thành công");
+						setIsLogin(true);
+						setErrors({});
+						setFormData((prev) => ({
+							...prev,
+							fullName: "",
+							phone: "",
+							confirmPassword: "",
+						}));
+					} else {
+						showError(
+							res.message || "Đăng ký thất bại. Vui lòng thử lại."
+						);
+					}
+					setIsLoading(false);
 				}
-			} else {
-				const res = await apiRegister({
-					email: formData.email,
-					password: formData.password,
-					name: formData.fullName,
-					phone: formData.phone,
-				});
-				if (res.success) {
-					showSuccess("Đăng ký tài khoản thành công");
-				} else {
-					showError(
-						res.message || "Đăng ký thất bại. Vui lòng thử lại."
-					);
-				}
-			}
-			setIsLoading(false);
-			toggleMode();
-		}, 500);
-	};
-
-	const toggleMode = () => {
-		setIsLogin(!isLogin);
-		setErrors({});
-		setFormData({
-			fullName: "",
-			email: "",
-			password: "",
-			confirmPassword: "",
-			phone: "",
-			rememberMe: false,
-		});
+			})();
+		}, 300);
 	};
 
 	return (
@@ -300,8 +305,8 @@ const LoginFarmAuth = () => {
 										<div className="w-10 h-1 mx-auto my-4 bg-gray-200 rounded-full"></div>
 										<Link to={"/"}>
 											<p className="text-sm text-emerald-600 hover:text-emerald-700 font-medium transition-colors">
-												Hoặc tiếp tục mua hàng mà không cần đăng
-												nhập
+												Hoặc tiếp tục mua hàng mà không
+												cần đăng nhập
 											</p>
 										</Link>
 									</div>

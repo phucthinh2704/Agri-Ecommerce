@@ -11,6 +11,7 @@
     "server": "cd ../server && npm run dev"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.9.2",
     "@react-oauth/google": "^0.12.2",
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.13",

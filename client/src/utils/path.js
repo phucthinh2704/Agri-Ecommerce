@@ -22,7 +22,7 @@ const path = {
 	MEMBER: "member",
 	PERSONAL: "personal",
 	MY_CART: "my-cart",
-	ORDER_HISTORY: "order-history",
+	MY_ORDERS: "my-orders",
 	WISHLIST: "wishlist",
 };
 

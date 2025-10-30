@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import formatUnit from "../utils/formatUnit";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/cart/cartSlice";
-import { toast } from "react-toastify"; // For feedback
+import { toast } from "react-toastify";
+import useAlert from "../hooks/useAlert";
 
 const ProductCard = ({ product, index }) => {
 	const imageUrl = product.images[0];
@@ -11,11 +12,19 @@ const ProductCard = ({ product, index }) => {
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
+	const { showConfirm } = useAlert();
 
 	const handleAddToCart = async () => {
 		if (!user) {
-			toast.info("Vui lòng đăng nhập để thêm vào giỏ hàng.");
-			navigate("/login"); // Redirect to login page
+			const result = await showConfirm(
+				"Bạn cần đăng nhập để vào hệ thống để thực hiện hành động này!"
+			);
+			if (result.isConfirmed) {
+				setTimeout(() => {
+					navigate("/login");
+				}, 200)
+			}
+			// toast.info("Vui lòng đăng nhập để thêm vào giỏ hàng.");
 			return;
 		}
 		if (product.stock === 0) return; // Should be disabled anyway

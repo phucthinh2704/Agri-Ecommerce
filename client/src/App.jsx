@@ -2,13 +2,15 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { PrivateRoute, PublicRoute } from "./components";
 import AllProductsPage from "./pages/AllProducts";
+import CartPage from "./pages/Cart";
 import CategoryPage from "./pages/Category";
+import CheckoutPage from "./pages/Checkout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import MyOrdersPage from "./pages/MyOrders";
 import ProductDetailPage from "./pages/ProductDetail";
 import PublicLayout from "./pages/PublicLayout";
 import path from "./utils/path";
-import CartPage from "./pages/Cart";
 
 function App() {
 	return (
@@ -49,6 +51,24 @@ function App() {
 						element={
 							<PrivateRoute>
 								<CartPage />
+							</PrivateRoute>
+						}
+					/>
+
+					<Route
+						path={path.CHECKOUT} // "checkout"
+						element={
+							<PrivateRoute>
+								<CheckoutPage />
+							</PrivateRoute>
+						}
+					/>
+
+					<Route
+						path={path.MY_ORDERS} // "my-orders"
+						element={
+							<PrivateRoute>
+								<MyOrdersPage />
 							</PrivateRoute>
 						}
 					/>

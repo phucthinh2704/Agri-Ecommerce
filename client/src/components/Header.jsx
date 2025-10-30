@@ -165,7 +165,7 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 								onKeyDown={(e) =>
 									e.key === "Enter" && handleSearchSubmit()
 								}
-								autoComplete="off" // Tắt tự động điền của trình duyệt
+								autoComplete="off"
 								className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
 							/>
 							<button
@@ -322,15 +322,17 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 
 										{/* Menu Items */}
 										<div className="py-1">
-											<button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2">
-												<User className="w-4 h-4" />
-												<span>Thông tin tài khoản</span>
-											</button>
-											<button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2">
+											<button
+												className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer"
+												onClick={() =>
+													navigate(
+														`/${path.MY_ORDERS}`
+													)
+												}>
 												<Package className="w-4 h-4" />
 												<span>Đơn hàng của tôi</span>
 											</button>
-											<button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2">
+											<button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer">
 												<Heart className="w-4 h-4" />
 												<span>Sản phẩm yêu thích</span>
 											</button>
@@ -359,7 +361,7 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 
 						{/* Shopping Cart */}
 						<Link to={path.MY_CART}>
-							<button className="relative p-2 text-gray-700 hover:text-green-600 transition-colors">
+							<button className="relative p-2 text-gray-700 hover:text-green-600 transition-colors cursor-pointer">
 								<ShoppingCart className="w-6 h-6" />
 								{cartCount > 0 && (
 									<span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
@@ -513,21 +515,17 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 								</div>
 
 								{/* Mobile Menu Items */}
-								<button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
-									<User className="w-4 h-4" />
-									<span>Thông tin tài khoản</span>
-								</button>
-								<button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
+								<button
+									className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2"
+									onClick={() =>
+										navigate(`/${path.MY_ORDERS}`)
+									}>
 									<Package className="w-4 h-4" />
 									<span>Đơn hàng của tôi</span>
 								</button>
 								<button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
 									<Heart className="w-4 h-4" />
 									<span>Sản phẩm yêu thích</span>
-								</button>
-								<button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
-									<Settings className="w-4 h-4" />
-									<span>Cài đặt</span>
 								</button>
 								<button
 									onClick={onLogout}
@@ -537,10 +535,12 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 								</button>
 							</div>
 						) : (
-							<button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
-								<User className="w-4 h-4" />
-								<span>Đăng nhập</span>
-							</button>
+							<Link to="/login">
+								<button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
+									<User className="w-4 h-4" />
+									<span>Đăng nhập</span>
+								</button>
+							</Link>
 						)}
 					</div>
 				)}

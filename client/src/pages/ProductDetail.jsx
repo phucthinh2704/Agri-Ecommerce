@@ -12,10 +12,13 @@ import {
 	ShieldCheck,
 	ArrowLeft,
 } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { apiGetProductBySlug } from "../api/product";
 import { MarkdownFormatter } from "../components";
 import formatUnit from "../utils/formatUnit";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../store/cart/cartSlice";
+import { toast } from "react-toastify";
 
 // Component Loading với animation đẹp hơn
 const LoadingSpinner = () => (
@@ -31,29 +34,16 @@ const LoadingSpinner = () => (
 
 const ProductDetailPage = () => {
 	const { slug } = useParams();
-	// Simulated product data - Replace with actual API call
-	const [product, setProduct] = useState({
-		name: "Rau Cải Xanh Hữu Cơ",
-		slug: "rau-cai-xanh-huu-co",
-		description:
-			"Rau cải xanh hữu cơ tươi ngon, được trồng theo tiêu chuẩn organic nghiêm ngặt.\n\nGiàu vitamin A, C, K và các khoáng chất thiết yếu.\nKhông sử dụng thuốc trừ sâu hóa học.\nThu hoạch trong ngày, đảm bảo độ tươi tối đa.",
-		category: "Rau củ",
-		price: 45000,
-		unit: "kg",
-		stock: 50,
-		images: [
-			"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800",
-			"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=800",
-			"https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=800",
-		],
-		sold: 234,
-	});
+	const [product, setProduct] = useState({});
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [selectedImage, setSelectedImage] = useState(0);
 	const [quantity, setQuantity] = useState(1);
 	const [isLiked, setIsLiked] = useState(false);
-	const [showAddedToCart, setShowAddedToCart] = useState(false);
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		const fetchProduct = async () => {
@@ -63,7 +53,6 @@ const ProductDetailPage = () => {
 				const res = await apiGetProductBySlug(slug);
 				if (res.success) {
 					setProduct(res.data);
-					// Reset state khi tải sản phẩm mới
 					setSelectedImage(0);
 					setQuantity(1);
 				} else {
@@ -79,23 +68,24 @@ const ProductDetailPage = () => {
 		fetchProduct();
 	}, [slug]);
 
-  const formatCategoryName = (category) => {
-    switch (category) {
-      case "vegetables":
-        return "Rau củ";
-      case "tubers":
-        return "Củ, khoai, sắn";
-      case "fruits":
-        return "Trái cây";
-      case "herbs":
-        return "Rau thơm & thảo mộc";
-      case "mushrooms":
-        return "Nấm các loại";
-      case "grains":
-        return "Ngũ cốc & hạt";
-      case "eggs":
-        return "Trứng";
-  }}
+	const formatCategoryName = (category) => {
+		switch (category) {
+			case "vegetables":
+				return "Rau củ";
+			case "tubers":
+				return "Củ, khoai, sắn";
+			case "fruits":
+				return "Trái cây";
+			case "herbs":
+				return "Rau thơm & thảo mộc";
+			case "mushrooms":
+				return "Nấm các loại";
+			case "grains":
+				return "Ngũ cốc & hạt";
+			case "eggs":
+				return "Trứng";
+		}
+	};
 
 	const handleQuantityChange = (amount) => {
 		setQuantity((prev) => {
@@ -106,10 +96,28 @@ const ProductDetailPage = () => {
 		});
 	};
 
-	const handleAddToCart = () => {
-		console.log(`Đã thêm ${quantity} ${product.name} vào giỏ hàng.`);
-		setShowAddedToCart(true);
-		setTimeout(() => setShowAddedToCart(false), 3000);
+	const handleAddToCart = async () => {
+		// Kiểm tra đăng nhập
+		if (!user) {
+			toast.info("Vui lòng đăng nhập để thêm vào giỏ hàng.");
+			navigate("/login", { state: { from: `/product/${slug}` } });
+			return;
+		}
+
+		if (product.stock === 0) return;
+
+		try {
+			// Gọi async thunk với productId VÀ quantity
+			await dispatch(
+				addToCart({ productId: product._id, quantity: quantity })
+			).unwrap(); // .unwrap() để bắt lỗi từ rejectWithValue
+
+			// Hiển thị thông báo thành công
+			toast.success(`Đã thêm ${quantity} ${product.name} vào giỏ hàng!`);
+		} catch (error) {
+			toast.error(error || "Thêm vào giỏ hàng thất bại.");
+			console.error("Add to cart failed:", error);
+		}
 	};
 	const handleBack = () => {
 		window.history.back();
@@ -125,16 +133,28 @@ const ProductDetailPage = () => {
 	const rating = 4.5;
 	const reviewCount = 127;
 
+	if (!product) {
+		return (
+			<div className="min-h-[60vh] flex flex-col items-center justify-center text-center">
+				<Leaf className="w-24 h-24 text-gray-300 mb-4" />
+				<h2 className="text-2xl font-bold text-gray-700 mb-2">
+					Không tìm thấy sản phẩm
+				</h2>
+				<p className="text-gray-500 mb-6">
+					Sản phẩm bạn đang tìm kiếm có thể đã bị xóa hoặc không tồn
+					tại.
+				</p>
+				<Link
+					to="/"
+					className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+					Quay về Trang chủ
+				</Link>
+			</div>
+		);
+	}
+
 	return (
 		<div className="bg-gradient-to-b from-green-50 to-white min-h-screen">
-			{/* Success Toast */}
-			{showAddedToCart && (
-				<div className="fixed top-4 right-4 z-50 bg-green-600 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center space-x-3 animate-[slideInRight_0.3s_ease-out]">
-					<Check className="w-5 h-5" />
-					<span className="font-medium">Đã thêm vào giỏ hàng!</span>
-				</div>
-			)}
-
 			<div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
 				{/* Breadcrumb */}
 				<button
@@ -283,8 +303,8 @@ const ProductDetailPage = () => {
 								<div className="flex items-center space-x-2">
 									<Check className="w-5 h-5 text-green-600" />
 									<span className="text-green-700 font-medium">
-										Còn hàng ({product.stock} {formatUnit(product.unit)}
-										)
+										Còn hàng ({product.stock}{" "}
+										{formatUnit(product.unit)})
 									</span>
 								</div>
 							) : (

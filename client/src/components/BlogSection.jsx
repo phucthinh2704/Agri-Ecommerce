@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Newspaper } from "lucide-react";
 const BlogSection = () => {
 	const blogs = [
 		{
@@ -41,9 +41,12 @@ const BlogSection = () => {
 	};
 	return (
 		<section className="mb-16">
-			<h2 className="text-3xl font-bold text-gray-800 mb-8">
-				Blog Nông Sản
-			</h2>
+			<div className="flex items-center space-x-2 mb-4">
+				<Newspaper className="w-6 h-6 text-green-600" />
+				<h2 className="text-3xl font-bold text-gray-800">
+					Blog Nông Sản
+				</h2>
+			</div>
 			<div className="grid md:grid-cols-3 gap-6">
 				{blogs.map((blog) => (
 					<article

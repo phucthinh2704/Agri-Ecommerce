@@ -18,7 +18,6 @@ export const fetchCart = createAsyncThunk(
 		// The actual cart data is nested under response.data
 		// Calculate count based on items array length or sum of quantities
 		const cartData = response.data || { items: [], subtotal: 0 };
-		console.log(response)
 		const count = cartData.items.reduce(
 			(sum, item) => sum + item.quantity,
 			0

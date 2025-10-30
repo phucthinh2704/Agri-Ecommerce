@@ -95,9 +95,11 @@ const createOrder = asyncHandler(async (req, res) => {
 
 // Get all orders of current user
 const getMyOrders = asyncHandler(async (req, res) => {
-	const orders = await Order.find({ user_id: req.user._id }).sort({
-		createdAt: -1,
-	});
+	const orders = await Order.find({ user_id: req.user._id })
+		.sort({
+			createdAt: -1,
+		})
+		.populate("items.product_id", "name slug images price stock sold");
 	return res.json({ success: true, data: orders });
 });
 
