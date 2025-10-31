@@ -5,6 +5,7 @@ const { verifyAccessToken, isAdmin } = require("../middlewares/verify-token");
 // Public
 router.get("/", productCtrl.getAllProducts);
 router.get("/:slug", productCtrl.getProductBySlug);
+router.get("/id/:id", productCtrl.getProductById);
 
 // Admin-only
 router.post("/", verifyAccessToken, isAdmin, productCtrl.createProduct);

@@ -2,6 +2,7 @@ import {
 	ChevronDown,
 	Heart,
 	History,
+	LayoutDashboard,
 	Leaf,
 	Loader2,
 	LogOut,
@@ -322,6 +323,16 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 
 										{/* Menu Items */}
 										<div className="py-1">
+											{user?.role === "admin" && (
+												<Link to={path.ADMIN}>
+													<button className="w-full px-4 py-2 text-left text-sm font-bold text-purple-700 hover:bg-purple-50 flex items-center space-x-2">
+														<LayoutDashboard className="w-4 h-4" />
+														<span>
+															Trang quản trị
+														</span>
+													</button>
+												</Link>
+											)}
 											<button
 												className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer"
 												onClick={() =>

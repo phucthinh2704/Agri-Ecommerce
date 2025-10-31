@@ -17,6 +17,7 @@ const path = {
 	MANAGE_ORDERS: "manage-orders",
 	MANAGE_CATEGORIES: "manage-categories",
 	CREATE_PRODUCT: "create-product",
+	EDIT_PRODUCT: "edit-product/:id",
 
 	// Member Routes
 	MEMBER: "member",

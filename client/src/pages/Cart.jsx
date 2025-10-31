@@ -248,6 +248,12 @@ const CartPage = () => {
 		return <EmptyCart />;
 	}
 
+	const FREE_SHIP_THRESHOLD = +import.meta.env.VITE_FREE_SHIP_THRESHOLD || 300000;
+	const SHIPPING_FEE = +import.meta.env.VITE_SHIPPING_FEE || 30000;
+	const shippingFee = subtotal >= FREE_SHIP_THRESHOLD ? "Miễn phí" : SHIPPING_FEE.toLocaleString("vi-VN") + "đ";
+
+	const total = subtotal >= FREE_SHIP_THRESHOLD ? subtotal : subtotal + SHIPPING_FEE;
+
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
 			<div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
@@ -310,7 +316,7 @@ const CartPage = () => {
 									<div className="flex justify-between text-gray-600">
 										<span>Phí vận chuyển:</span>
 										<span className="font-semibold text-green-600">
-											Miễn phí
+											{shippingFee}
 										</span>
 									</div>
 								</div>
@@ -321,7 +327,7 @@ const CartPage = () => {
 										Tổng cộng:
 									</span>
 									<span className="text-2xl font-bold text-green-600">
-										{subtotal.toLocaleString("vi-VN")}đ
+										{total.toLocaleString("vi-VN")}đ
 									</span>
 								</div>
 

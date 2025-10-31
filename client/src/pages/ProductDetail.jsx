@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
 import {
+	ArrowLeft,
+	Check,
+	Heart,
 	Leaf,
-	Star,
 	Minus,
 	Plus,
-	ShoppingCart,
-	Heart,
 	Share2,
-	Check,
-	Truck,
 	ShieldCheck,
-	ArrowLeft,
+	ShoppingCart,
+	Star,
+	Truck,
 } from "lucide-react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { apiGetProductBySlug } from "../api/product";
-import { MarkdownFormatter } from "../components";
-import formatUnit from "../utils/formatUnit";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../store/cart/cartSlice";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { apiGetProductBySlug } from "../api/product";
+import { AutoFormatRenderer } from "../components";
+import { addToCart } from "../store/cart/cartSlice";
+import formatUnit from "../utils/formatUnit";
 
 // Component Loading với animation đẹp hơn
 const LoadingSpinner = () => (
@@ -376,7 +376,7 @@ const ProductDetailPage = () => {
 								<div className="w-1 h-6 bg-green-600 mr-3 rounded-full"></div>
 								Mô tả sản phẩm
 							</h3>
-							<MarkdownFormatter value={product.description} />
+							<AutoFormatRenderer content={product.description} />
 						</div>
 					</div>
 				</div>

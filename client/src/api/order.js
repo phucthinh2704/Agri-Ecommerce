@@ -7,7 +7,10 @@ export const apiCreateOrder = async (data) => {
 		return res;
 	} catch (err) {
 		console.error("Create order failed:", err);
-		return { success: false, message: err?.message || "Create order failed" };
+		return {
+			success: false,
+			message: err?.message || "Create order failed",
+		};
 	}
 };
 
@@ -17,7 +20,10 @@ export const apiGetMyOrders = async () => {
 		return res;
 	} catch (err) {
 		console.error("Get my orders failed:", err);
-		return { success: false, message: err?.message || "Get my orders failed" };
+		return {
+			success: false,
+			message: err?.message || "Get my orders failed",
+		};
 	}
 };
 export const apiCancelOrder = (orderId) => {
@@ -26,6 +32,35 @@ export const apiCancelOrder = (orderId) => {
 		return res;
 	} catch (err) {
 		console.error("Cancel order failed:", err);
-		return { success: false, message: err?.message || "Cancel order failed" };
+		return {
+			success: false,
+			message: err?.message || "Cancel order failed",
+		};
 	}
-}
+};
+
+export const apiGetAllOrders = async () => {
+	try {
+		const res = await axios.get("/order");
+		return res;
+	} catch (err) {
+		console.error("Get all orders failed:", err);
+		return {
+			success: false,
+			message: err?.message || "Get all orders failed",
+		};
+	}
+};
+
+export const apiUpdateOrderStatus = async (orderId, status) => {
+	try {
+		const res = await axios.put(`/order/${orderId}/status`, { status });
+		return res;
+	} catch (err) {
+		console.error("Update order status failed:", err);
+		return {
+			success: false,
+			message: err?.message || "Update order status failed",
+		};
+	}
+};

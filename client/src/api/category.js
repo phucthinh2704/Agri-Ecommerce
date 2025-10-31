@@ -7,7 +7,10 @@ export const apiGetAllCategories = async (params = {}) => {
 		return res;
 	} catch (err) {
 		console.error("Get all categories failed:", err);
-		return { success: false, message: err?.message || "Get all categories failed" };
+		return {
+			success: false,
+			message: err?.message || "Get all categories failed",
+		};
 	}
 };
 
@@ -17,6 +20,22 @@ export const apiGetCategoryBySlug = async (slug) => {
 		return res;
 	} catch (err) {
 		console.error("Get category by slug failed:", err);
-		return { success: false, message: err?.message || "Get category by slug failed" };
+		return {
+			success: false,
+			message: err?.message || "Get category by slug failed",
+		};
+	}
+};
+
+export const apiCreateCategory = async (data) => {
+	try {
+		const res = await axios.post("/category", data);
+		return res;
+	} catch (err) {
+		console.error("Create category failed:", err);
+		return {
+			success: false,
+			message: err?.message || "Create category failed",
+		};
 	}
 };
