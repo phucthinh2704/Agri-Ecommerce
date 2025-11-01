@@ -39,3 +39,23 @@ export const apiCreateCategory = async (data) => {
 		};
 	}
 };
+
+export const apiUpdateCategory = async (id, data) => {
+	try {
+		const res = await axios.put(`/category/${id}`, data);
+		return res;
+	} catch (err) {
+		console.error("Update category failed:", err);
+		return { success: false, message: err?.message || "Update failed" };
+	}
+};
+
+export const apiDeleteCategory = async (id) => {
+	try {
+		const res = await axios.delete(`/category/${id}`);
+		return res;
+	} catch (err) {
+		console.error("Delete category failed:", err);
+		return { success: false, message: err?.message || "Delete failed" };
+	}
+};

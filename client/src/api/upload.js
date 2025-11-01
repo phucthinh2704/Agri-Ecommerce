@@ -23,3 +23,18 @@ export const apiUploadImages = async (files) => {
 		};
 	}
 };
+
+export const apiUploadSingleImage = async (file) => {
+	const formData = new FormData();
+	formData.append("image", file);
+
+	try {
+		const res = await axios.post("/upload/single-image", formData, {
+			headers: { "Content-Type": "multipart/form-data" },
+		});
+		return res;
+	} catch (err) {
+		console.error("Single image upload failed:", err);
+		return { success: false, message: err?.message || "Upload thất bại" };
+	}
+};

@@ -12,4 +12,11 @@ router.post(
 	uploadCtrl.uploadImages
 );
 
+router.post(
+	"/single-image",
+	[verifyAccessToken],
+	upload.single("image"), // <-- Dùng .single() thay vì .array()
+	uploadCtrl.uploadSingleImage
+);
+
 module.exports = router;

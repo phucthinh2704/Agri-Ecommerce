@@ -1,4 +1,4 @@
-const HeroSection = () => {
+const HeroSection = ({ onBuyNowClick }) => {
 	return (
 		<div className="relative bg-gradient-to-r from-green-600 to-green-700 text-white">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
@@ -13,7 +13,9 @@ const HeroSection = () => {
 							100% tự nhiên, không hóa chất. Giao hàng tận nơi,
 							cam kết chất lượng tốt nhất.
 						</p>
-						<button className="bg-white text-green-700 px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors">
+						<button
+							className="bg-white text-green-700 px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors"
+							onClick={onBuyNowClick}>
 							Mua Ngay
 						</button>
 					</div>

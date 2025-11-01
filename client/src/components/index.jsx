@@ -2,6 +2,7 @@ export { default as AboutSection } from "./AboutSection";
 export { default as AdminHeader } from "./admin/AdminHeader";
 export { default as AdminRoute } from "./admin/AdminRoute";
 export { default as AdminSidebar } from "./admin/AdminSidebar";
+export { default as OrderDetailModalAdmin } from "./admin/OrderDetailModal";
 export { default as AutoFormatRenderer } from "./AutoFormatRenderer";
 export { default as BannerSlider } from "./BannerSlider";
 export { default as BlogSection } from "./BlogSection";
@@ -21,5 +22,8 @@ export { default as Pagination } from "./Pagination";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as ProductCard } from "./ProductCard";
 export { default as ProductSection } from "./ProductSection";
+export { default as ProfileModal } from "./ProfileModal";
 export { default as PublicRoute } from "./PublicRoute";
 export { default as ScrollToTop } from "./ScrollToTop";
+export { default as ScrollToTopButton } from "./ScrollToTopButton";
+

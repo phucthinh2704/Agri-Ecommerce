@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { apiGetAllCategories } from "../api/category";
-import { Footer, Header, ScrollToTop } from "../components";
+import { Footer, Header, ScrollToTop, ProfileModal, ScrollToTopButton } from "../components";
 import useAlert from "../hooks/useAlert";
 import { logoutUser } from "../store/auth";
 import {
@@ -14,8 +14,9 @@ import {
 
 const PublicLayout = () => {
 	const [categories, setCategories] = useState([]);
-	// const [cartCount, setCartCount] = useState(12); // Tạm thời
 	const cartCount = useSelector(selectCartCount);
+	const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
 	const { user } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const PublicLayout = () => {
 				user={user}
 				onLogout={handleLogout}
 				categories={categories}
+				onEditProfile={() => setIsProfileModalOpen(true)}
 			/>
 
 			<ScrollToTop />
@@ -72,6 +74,16 @@ const PublicLayout = () => {
 
 			{/* Footer luôn hiển thị */}
 			<Footer />
+
+			<ScrollToTopButton />
+
+			{user && (
+				<ProfileModal
+					user={user}
+					isOpen={isProfileModalOpen}
+					onClose={() => setIsProfileModalOpen(false)}
+				/>
+			)}
 		</div>
 	);
 };

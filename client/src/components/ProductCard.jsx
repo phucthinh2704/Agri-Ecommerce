@@ -86,7 +86,7 @@ const ProductCard = ({ product, index }) => {
 				<Link
 					to={`/product/${product.slug}`}
 					className="flex-shrink-0">
-					<h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-green-600 transition-colors">
+					<h3 className="font-semibold text-gray-800 mb-2 line-clamp-1 group-hover:text-green-600 transition-colors">
 						{product.name}
 					</h3>
 				</Link>

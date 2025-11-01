@@ -10,14 +10,16 @@ import {
 	ShoppingCart,
 	Star,
 	Truck,
+	TrendingUp,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { apiGetProductBySlug } from "../api/product";
-import { AutoFormatRenderer } from "../components";
+import { AutoFormatRenderer, ProductSection, ProductCard } from "../components";
 import { addToCart } from "../store/cart/cartSlice";
+
 import formatUnit from "../utils/formatUnit";
 
 // Component Loading với animation đẹp hơn
@@ -35,6 +37,7 @@ const LoadingSpinner = () => (
 const ProductDetailPage = () => {
 	const { slug } = useParams();
 	const [product, setProduct] = useState({});
+	const [relatedProducts, setRelatedProducts] = useState([]);
 
 	const [loading, setLoading] = useState(true);
 	const [selectedImage, setSelectedImage] = useState(0);
@@ -53,10 +56,14 @@ const ProductDetailPage = () => {
 				const res = await apiGetProductBySlug(slug);
 				if (res.success) {
 					setProduct(res.data);
+					setRelatedProducts(res.related || []);
+
 					setSelectedImage(0);
 					setQuantity(1);
 				} else {
 					console.error(res.message || "Không tìm thấy sản phẩm.");
+					setProduct({});
+					setRelatedProducts([]);
 				}
 			} catch (err) {
 				console.error("Error fetching product details:", err);
@@ -182,7 +189,7 @@ const ProductDetailPage = () => {
 						{product.name}
 					</span>
 				</nav>
-				<div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+				<div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
 					{/* === COLUMN LEFT: IMAGES === */}
 					<div className="space-y-4">
 						{/* Main Image with enhanced styling */}
@@ -380,6 +387,15 @@ const ProductDetailPage = () => {
 						</div>
 					</div>
 				</div>
+
+				{relatedProducts.length > 0 && (
+					<ProductSection
+						title="Sản phẩm liên quan"
+						products={relatedProducts}
+						icon={TrendingUp}
+						related={product.category}
+					/>
+				)}
 			</div>
 		</div>
 	);

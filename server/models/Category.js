@@ -4,8 +4,8 @@ var categorySchema = new mongoose.Schema(
 	{
 		name: { type: String, required: true, trim: true },
 		slug: { type: String, required: true, unique: true, lowercase: true },
-		description: { type: String, default: "" },
-		image: { type: String, default: "" },
+		description: { type: String, required: true, trim: true },
+		image: { type: String, required: true },
 	},
 	{ timestamps: true }
 );

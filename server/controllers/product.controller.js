@@ -68,13 +68,36 @@ const getAllProducts = asyncHandler(async (req, res) => {
 });
 
 const getProductBySlug = asyncHandler(async (req, res) => {
-	const product = await Product.findOne({ slug: req.params.slug });
-	if (!product)
+	const { slug } = req.params;
+	if (!slug) {
+		return res
+			.status(400)
+			.json({ success: false, message: "Missing slug" });
+	}
+
+	// Bước 1: Tìm sản phẩm chính
+	const product = await Product.findOne({ slug: slug });
+	if (!product) {
 		return res
 			.status(404)
 			.json({ success: false, message: "Product not found" });
+	}
 
-	return res.json({ success: true, data: product });
+	// Bước 2: Tìm các sản phẩm liên quan
+	// (Cùng danh mục, không phải là sản phẩm hiện tại)
+	const relatedProducts = await Product.find({
+		category: product.category, // Cùng danh mục
+		_id: { $ne: product._id }, // Loại trừ chính nó
+	})
+		.limit(4) // Lấy tối đa 4 sản phẩm
+		.select("name slug price unit images sold stock"); // Chỉ lấy các trường cần thiết
+
+	// Bước 3: Trả về cả hai
+	return res.json({
+		success: true,
+		data: product,
+		related: relatedProducts, // Thêm trường 'related'
+	});
 });
 
 const getProductById = asyncHandler(async (req, res) => {
@@ -115,5 +138,5 @@ module.exports = {
 	getProductBySlug,
 	updateProduct,
 	deleteProduct,
-	getProductById
+	getProductById,
 };

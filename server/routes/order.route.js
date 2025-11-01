@@ -8,6 +8,7 @@ router.put("/:orderId/cancel", verifyAccessToken, orderCtrl.cancelOrder);
 
 // ADMIN ROUTES
 router.get("/", verifyAccessToken, isAdmin, orderCtrl.getAllOrders);
+router.get("/stats", verifyAccessToken, isAdmin, orderCtrl.getOrderStats);
 router.put("/:orderId/status", verifyAccessToken, isAdmin, orderCtrl.updateOrderStatus);
 
 module.exports = router;

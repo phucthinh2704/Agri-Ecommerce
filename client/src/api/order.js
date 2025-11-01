@@ -39,9 +39,10 @@ export const apiCancelOrder = (orderId) => {
 	}
 };
 
-export const apiGetAllOrders = async () => {
+export const apiGetAllOrders = async (params = {}) => {
 	try {
-		const res = await axios.get("/order");
+		const query = new URLSearchParams(params).toString();
+		const res = await axios.get(`/order?${query}`);
 		return res;
 	} catch (err) {
 		console.error("Get all orders failed:", err);
@@ -63,4 +64,16 @@ export const apiUpdateOrderStatus = async (orderId, status) => {
 			message: err?.message || "Update order status failed",
 		};
 	}
+};
+
+export const apiGetOrderStats = async (params = {}) => {
+  try {
+    const query = new URLSearchParams(params).toString();
+    // Gọi đến route /stats mới
+    const res = await axios.get(`/order/stats?${query}`); 
+    return res;
+  } catch (err) {
+    console.error("Get order stats failed:", err);
+    return { success: false, message: err?.message || "Get stats failed" };
+  }
 };

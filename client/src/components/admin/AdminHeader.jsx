@@ -21,15 +21,6 @@ const AdminHeader = () => {
 					<button className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors">
 						<Menu className="w-6 h-6 text-slate-600" />
 					</button>
-					
-					<div className="relative flex-1 hidden md:block">
-						<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-						<input
-							type="text"
-							placeholder="Tìm kiếm sản phẩm, đơn hàng..."
-							className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
-						/>
-					</div>
 				</div>
 
 				{/* Right section - Actions */}

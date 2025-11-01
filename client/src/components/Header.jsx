@@ -19,7 +19,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiGetAllProducts } from "../api/product";
 import path from "../utils/path";
 
-const Header = ({ cartCount, user, onLogout, categories = [] }) => {
+const Header = ({
+	cartCount,
+	user,
+	onLogout,
+	categories = [],
+	onEditProfile,
+}) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -335,6 +341,17 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 											)}
 											<button
 												className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer"
+												onClick={() => {
+													onEditProfile(); // Gọi hàm từ props
+													setIsUserMenuOpen(false); // Đóng menu
+												}}>
+												<User className="w-4 h-4" />
+												<span>
+													Thông tin người dùng
+												</span>
+											</button>
+											<button
+												className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer"
 												onClick={() =>
 													navigate(
 														`/${path.MY_ORDERS}`
@@ -343,10 +360,10 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 												<Package className="w-4 h-4" />
 												<span>Đơn hàng của tôi</span>
 											</button>
-											<button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer">
+											{/* <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer">
 												<Heart className="w-4 h-4" />
 												<span>Sản phẩm yêu thích</span>
-											</button>
+											</button> */}
 										</div>
 
 										{/* Logout */}
@@ -527,6 +544,15 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 
 								{/* Mobile Menu Items */}
 								<button
+									className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer"
+									onClick={() => {
+										onEditProfile(); // Gọi hàm từ props
+										setIsUserMenuOpen(false); // Đóng menu
+									}}>
+									<User className="w-4 h-4" />
+									<span>Thông tin người dùng</span>
+								</button>
+								<button
 									className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2"
 									onClick={() =>
 										navigate(`/${path.MY_ORDERS}`)
@@ -534,10 +560,10 @@ const Header = ({ cartCount, user, onLogout, categories = [] }) => {
 									<Package className="w-4 h-4" />
 									<span>Đơn hàng của tôi</span>
 								</button>
-								<button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
+								{/* <button className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2">
 									<Heart className="w-4 h-4" />
 									<span>Sản phẩm yêu thích</span>
-								</button>
+								</button> */}
 								<button
 									onClick={onLogout}
 									className="w-full px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50 rounded flex items-center space-x-2">

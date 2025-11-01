@@ -1,5 +1,5 @@
 import { Leaf, Star, TrendingUp } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { apiGetAllProducts } from "../api/product";
 import {
 	AboutSection,
@@ -8,10 +8,9 @@ import {
 	CategorySection,
 	HeroSection,
 	ProductSection,
-	MapSection
+	MapSection,
 } from "../components";
 import { useNavigate } from "react-router-dom";
-
 
 const Home = () => {
 	const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -20,6 +19,7 @@ const Home = () => {
 	const [loading, setLoading] = useState(true);
 
 	const navigate = useNavigate();
+	const featuredProductRef = useRef(null);
 
 	useEffect(() => {
 		loadData();
@@ -66,6 +66,13 @@ const Home = () => {
 		navigate(`/category/${category.slug}`);
 	};
 
+	const handleScrollToProducts = () => {
+		featuredProductRef.current?.scrollIntoView({
+			behavior: "smooth",
+			block: "start",
+		});
+	};
+
 	if (loading) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
@@ -79,7 +86,7 @@ const Home = () => {
 
 	return (
 		<>
-			<HeroSection />
+			<HeroSection onBuyNowClick={handleScrollToProducts} />
 
 			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 				{/* Banner Slider */}
@@ -100,11 +107,13 @@ const Home = () => {
 				<CategorySection onCategoryClick={handleCategoryClick} />
 
 				{/* Featured Products */}
-				<ProductSection
-					title="Sản Phẩm Nổi Bật"
-					products={featuredProducts}
-					icon={TrendingUp}
-				/>
+				<div ref={featuredProductRef}>
+					<ProductSection
+						title="Sản Phẩm Nổi Bật"
+						products={featuredProducts}
+						icon={TrendingUp}
+					/>
+				</div>
 
 				{/* New Products */}
 				{newProducts.length > 0 && (

@@ -12,7 +12,7 @@ const AdminLayout = () => {
 				<AdminHeader />
 
 				{/* Nội dung chính, có thể cuộn */}
-				<main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
+				<main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
 					<Outlet /> {/* Các trang con của admin sẽ render ở đây */}
 				</main>
 			</div>

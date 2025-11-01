@@ -55,4 +55,33 @@ const uploadImages = asyncHandler(async (req, res) => {
 	}
 });
 
-module.exports = { uploadImages };
+const uploadSingleImage = asyncHandler(async (req, res) => {
+  // req.file (không có s) là file từ multer (do dùng upload.single())
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: 'Không có file nào được tải lên.' });
+  }
+
+  try {
+    const url = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: process.env.CLOUDINARY_FOLDER || 'farmfresh' }, 
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result.secure_url);
+        }
+      );
+      stream.end(req.file.buffer);
+    });
+
+    return res.status(201).json({ success: true, data: url }); // Trả về 1 URL string
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Lỗi khi tải ảnh lên cloud',
+      error: error.message,
+    });
+  }
+});
+
+module.exports = { uploadImages, uploadSingleImage };

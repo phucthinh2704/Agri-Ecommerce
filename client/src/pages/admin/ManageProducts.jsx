@@ -1,4 +1,15 @@
-import { Edit, Leaf, PlusCircle, Search, Trash2, Filter, TrendingUp, Package, Grid, List } from "lucide-react";
+import {
+	Edit,
+	Filter,
+	Grid,
+	Leaf,
+	List,
+	Package,
+	PlusCircle,
+	Search,
+	Trash2,
+	TrendingUp,
+} from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -27,7 +38,7 @@ const ManageProducts = () => {
 			search: searchParams.get("search") || "",
 			category: searchParams.get("category") || "",
 			sort: searchParams.get("sort") || "-createdAt",
-			limit: 10,
+			limit: 9,
 		}),
 		[searchParams]
 	);
@@ -118,7 +129,9 @@ const ManageProducts = () => {
 							<h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
 								Quản lý sản phẩm
 							</h1>
-							<p className="text-gray-600">Quản lý và theo dõi toàn bộ sản phẩm của bạn</p>
+							<p className="text-gray-600">
+								Quản lý và theo dõi toàn bộ sản phẩm của bạn
+							</p>
 						</div>
 						<Link to={`/${path.ADMIN}/${path.CREATE_PRODUCT}`}>
 							<button className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 w-full md:w-auto font-medium">
@@ -133,8 +146,12 @@ const ManageProducts = () => {
 						<div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
 							<div className="flex items-center justify-between">
 								<div>
-									<p className="text-sm text-gray-600 mb-1">Tổng sản phẩm</p>
-									<p className="text-2xl font-bold text-gray-900">{pagination?.total || 0}</p>
+									<p className="text-sm text-gray-600 mb-1">
+										Tổng sản phẩm
+									</p>
+									<p className="text-2xl font-bold text-gray-900">
+										{pagination?.total || 0}
+									</p>
 								</div>
 								<div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
 									<Package className="w-6 h-6 text-blue-600" />
@@ -144,8 +161,12 @@ const ManageProducts = () => {
 						<div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
 							<div className="flex items-center justify-between">
 								<div>
-									<p className="text-sm text-gray-600 mb-1">Tổng kho</p>
-									<p className="text-2xl font-bold text-gray-900">{totalStock}</p>
+									<p className="text-sm text-gray-600 mb-1">
+										Tổng kho
+									</p>
+									<p className="text-2xl font-bold text-gray-900">
+										{totalStock}
+									</p>
 								</div>
 								<div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
 									<Leaf className="w-6 h-6 text-green-600" />
@@ -155,8 +176,12 @@ const ManageProducts = () => {
 						<div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
 							<div className="flex items-center justify-between">
 								<div>
-									<p className="text-sm text-gray-600 mb-1">Đã bán</p>
-									<p className="text-2xl font-bold text-gray-900">{totalSold}</p>
+									<p className="text-sm text-gray-600 mb-1">
+										Đã bán
+									</p>
+									<p className="text-2xl font-bold text-gray-900">
+										{totalSold}
+									</p>
 								</div>
 								<div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
 									<TrendingUp className="w-6 h-6 text-purple-600" />
@@ -177,7 +202,10 @@ const ManageProducts = () => {
 								defaultValue={params.search}
 								onKeyDown={(e) => {
 									if (e.key === "Enter") {
-										handleFilterChange("search", e.target.value);
+										handleFilterChange(
+											"search",
+											e.target.value
+										);
 									}
 								}}
 								className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
@@ -225,21 +253,32 @@ const ManageProducts = () => {
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-100 animate-in fade-in slide-in-from-top-2 duration-300">
 							<select
 								value={params.category}
-								onChange={(e) => handleFilterChange("category", e.target.value)}
+								onChange={(e) =>
+									handleFilterChange(
+										"category",
+										e.target.value
+									)
+								}
 								className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white transition-all">
 								<option value="">Tất cả danh mục</option>
 								{categories.map((cat) => (
-									<option key={cat._id} value={cat.slug}>
+									<option
+										key={cat._id}
+										value={cat.slug}>
 										{cat.name}
 									</option>
 								))}
 							</select>
 							<select
 								value={params.sort}
-								onChange={(e) => handleFilterChange("sort", e.target.value)}
+								onChange={(e) =>
+									handleFilterChange("sort", e.target.value)
+								}
 								className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white transition-all">
 								{CONSTANTS.sortOptions.map((opt) => (
-									<option key={opt.value} value={opt.value}>
+									<option
+										key={opt.value}
+										value={opt.value}>
 										{opt.label}
 									</option>
 								))}
@@ -253,7 +292,9 @@ const ManageProducts = () => {
 					<div className="flex justify-center items-center h-96 bg-white rounded-2xl shadow-sm">
 						<div className="text-center">
 							<Leaf className="w-12 h-12 animate-spin text-green-600 mx-auto mb-4" />
-							<p className="text-gray-600">Đang tải sản phẩm...</p>
+							<p className="text-gray-600">
+								Đang tải sản phẩm...
+							</p>
 						</div>
 					</div>
 				) : viewMode === "grid" ? (
@@ -262,37 +303,60 @@ const ManageProducts = () => {
 							<div
 								key={product._id}
 								className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group"
-								style={{ animationDelay: `${index * 50}ms` }}>
+								style={{
+									animationDelay: `${index * 50}ms`,
+								}}>
 								<div className="relative overflow-hidden">
-									<img
-										src={product.images[0]}
-										alt={product.name}
-										className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-									/>
+									<Link
+										key={product._id}
+										to={`/product/${product.slug}`}>
+										<img
+											src={product.images[0]}
+											alt={product.name}
+											className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+										/>
+									</Link>
 									<div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-green-600">
 										{product.category}
 									</div>
 								</div>
 								<div className="p-5">
-									<h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-green-600 transition-colors">
-										{product.name}
-									</h3>
+									<Link
+										key={product._id}
+										to={`/product/${product.slug}`}>
+										<h3 className="font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-green-600 transition-colors">
+											{product.name}
+										</h3>
+									</Link>
 									<div className="flex items-center justify-between mb-4">
 										<div>
 											<p className="text-2xl font-bold text-green-600">
-												{product.price.toLocaleString("vi-VN")}đ
+												{product.price.toLocaleString(
+													"vi-VN"
+												)}
+												đ
 											</p>
-											<p className="text-sm text-gray-500">/{formatUnit(product.unit)}</p>
+											<p className="text-sm text-gray-500">
+												/{formatUnit(product.unit)}
+											</p>
 										</div>
 									</div>
 									<div className="grid grid-cols-2 gap-3 mb-4 text-sm">
 										<div className="bg-blue-50 rounded-lg p-2 text-center">
-											<p className="text-gray-600 text-xs mb-1">Kho</p>
-											<p className="font-semibold text-blue-600">{product.stock}</p>
+											<p className="text-gray-600 text-xs mb-1">
+												Kho
+											</p>
+											<p className="font-semibold text-blue-600">
+												{product.stock}
+											</p>
 										</div>
 										<div className="bg-purple-50 rounded-lg p-2 text-center">
-											<p className="text-gray-600 text-xs mb-1">Đã bán</p>
-											<p className="font-semibold text-purple-600">{product.sold}</p>
+											<p className="text-gray-600 text-xs mb-1">
+												Đã bán
+											</p>
+											<p className="font-semibold text-purple-600">
+												{product.sold}
+											</p>
 										</div>
 									</div>
 									<div className="flex gap-2">
@@ -305,7 +369,12 @@ const ManageProducts = () => {
 											</button>
 										</Link>
 										<button
-											onClick={() => handleDeleteProduct(product._id, product.name)}
+											onClick={() =>
+												handleDeleteProduct(
+													product._id,
+													product.name
+												)
+											}
 											className="flex items-center justify-center gap-2 bg-red-50 text-red-600 px-4 py-2.5 rounded-xl hover:bg-red-100 transition-colors font-medium">
 											<Trash2 className="w-4 h-4" />
 										</button>
@@ -347,14 +416,25 @@ const ManageProducts = () => {
 											className="hover:bg-green-50 transition-colors">
 											<td className="px-6 py-4">
 												<div className="flex items-center gap-4">
-													<img
-														src={product.images[0]}
-														alt={product.name}
-														className="w-14 h-14 rounded-xl object-cover shadow-sm"
-													/>
-													<span className="font-medium text-gray-900 line-clamp-2">
-														{product.name}
-													</span>
+													<Link
+														key={product._id}
+														to={`/product/${product.slug}`}>
+														<img
+															src={
+																product
+																	.images[0]
+															}
+															alt={product.name}
+															className="w-14 h-14 rounded-xl object-cover shadow-sm"
+														/>
+													</Link>
+													<Link
+														key={product._id}
+														to={`/product/${product.slug}`}>
+														<span className="font-medium text-gray-900 line-clamp-2 hover:text-green-600">
+															{product.name}
+														</span>
+													</Link>
 												</div>
 											</td>
 											<td className="px-6 py-4">
@@ -365,27 +445,43 @@ const ManageProducts = () => {
 											<td className="px-6 py-4">
 												<div>
 													<p className="font-semibold text-gray-900">
-														{product.price.toLocaleString("vi-VN")}đ
+														{product.price.toLocaleString(
+															"vi-VN"
+														)}
+														đ
 													</p>
-													<p className="text-sm text-gray-500">/{formatUnit(product.unit)}</p>
+													<p className="text-sm text-gray-500">
+														/
+														{formatUnit(
+															product.unit
+														)}
+													</p>
 												</div>
 											</td>
 											<td className="px-6 py-4">
-												<span className="font-medium text-gray-700">{product.stock}</span>
+												<span className="font-medium text-gray-700">
+													{product.stock}
+												</span>
 											</td>
 											<td className="px-6 py-4">
-												<span className="font-medium text-gray-700">{product.sold}</span>
+												<span className="font-medium text-gray-700">
+													{product.sold}
+												</span>
 											</td>
 											<td className="px-6 py-4">
 												<div className="flex justify-end gap-2">
-													<Link to={`/${path.ADMIN}/edit-product/${product._id}`}>
+													<Link
+														to={`/${path.ADMIN}/edit-product/${product._id}`}>
 														<button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
 															<Edit className="w-5 h-5" />
 														</button>
 													</Link>
 													<button
 														onClick={() =>
-															handleDeleteProduct(product._id, product.name)
+															handleDeleteProduct(
+																product._id,
+																product.name
+															)
 														}
 														className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
 														<Trash2 className="w-5 h-5" />

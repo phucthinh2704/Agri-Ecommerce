@@ -13,5 +13,7 @@ router.put("/update", verifyAccessToken, userCtrl.updateProfile);
 
 // Admin only
 router.get("/", verifyAccessToken, isAdmin, userCtrl.getAllUsers);
+router.put("/:id/role", verifyAccessToken, isAdmin, userCtrl.updateUserRole);
+router.delete("/:id", verifyAccessToken, isAdmin, userCtrl.deleteUser);
 
 module.exports = router;
