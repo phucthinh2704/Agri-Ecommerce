@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { apiGetAllCategories } from "../api/category";
-import { Footer, Header, ScrollToTop, ProfileModal, ScrollToTopButton } from "../components";
+import {
+	Footer,
+	Header,
+	ScrollToTop,
+	ProfileModal,
+	ScrollToTopButton,
+} from "../components";
 import useAlert from "../hooks/useAlert";
 import { logoutUser } from "../store/auth";
 import {
@@ -47,9 +53,9 @@ const PublicLayout = () => {
 			if (result.isConfirmed) {
 				dispatch(logoutUser());
 				toast.success("Đăng xuất thành công.");
-				// setTimeout(() => {
-				// }, 300);
-				navigate("/login");
+				setTimeout(() => {
+					navigate("/login");
+				}, 300);
 			}
 		});
 	};

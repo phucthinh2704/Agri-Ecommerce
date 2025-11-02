@@ -1,5 +1,6 @@
 import {
 	ChevronDown,
+	Heart,
 	History,
 	LayoutDashboard,
 	Leaf,
@@ -8,6 +9,7 @@ import {
 	Menu,
 	Package,
 	Search,
+	Settings,
 	ShoppingCart,
 	User,
 	X,
@@ -93,7 +95,6 @@ const Header = ({
 			if (!inDesktop && !inMobile) setSuggestions([]);
 		};
 
-		// document.addEventListener("mousedown", handleClickOutside);
 		document.addEventListener("click", handleClickOutside);
 		return () => document.removeEventListener("click", handleClickOutside);
 	}, []); // Chỉ chạy 1 lần
