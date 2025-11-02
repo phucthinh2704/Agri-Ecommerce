@@ -1,6 +1,5 @@
 import {
 	ChevronDown,
-	Heart,
 	History,
 	LayoutDashboard,
 	Leaf,
@@ -9,7 +8,6 @@ import {
 	Menu,
 	Package,
 	Search,
-	Settings,
 	ShoppingCart,
 	User,
 	X,

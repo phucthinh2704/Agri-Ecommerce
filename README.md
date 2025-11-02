@@ -16,7 +16,7 @@ Một nền tảng E-commerce Full-Stack hoàn chỉnh được xây dựng từ
 </p>
 
 <p>
-<strong><a href="https://github.com/phucthinh2704/Agri-Ecommerce">🚀 Xem Live Demo</a></strong>
+<strong><a href="https://agri-ecommerce-inky.vercel.app/">🚀 Xem Live Demo</a></strong>
 </p>
 
 </div>

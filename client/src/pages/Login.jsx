@@ -98,7 +98,6 @@ const LoginFarmAuth = () => {
 					});
 
 					if (res.success) {
-						console.log("Navigate:", fromPath)
 						navigate(fromPath, { replace: true });
 						dispatch(
 							loginSuccess({

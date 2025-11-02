@@ -47,9 +47,9 @@ const PublicLayout = () => {
 			if (result.isConfirmed) {
 				dispatch(logoutUser());
 				toast.success("Đăng xuất thành công.");
-				setTimeout(() => {
-					navigate("/login");
-				}, 300);
+				// setTimeout(() => {
+				// }, 300);
+				navigate("/login");
 			}
 		});
 	};
