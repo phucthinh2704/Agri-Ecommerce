@@ -7,31 +7,19 @@ Một nền tảng E-commerce Full-Stack hoàn chỉnh được xây dựng từ
 </p>
 
 <p>
-<img src="[https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black&style=for-the-badge](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black&style=for-the-badge)" alt="React 19">
-<img src="[https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white&style=for-the-badge](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white&style=for-the-badge)" alt="Node.js">
-<img src="[https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white&style=for-the-badge](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white&style=for-the-badge)" alt="Express">
-<img src="[https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge)" alt="MongoDB">
-<img src="[https://img.shields.io/badge/Redux-Toolkit-764ABC?logo=redux&logoColor=white&style=for-the-badge](https://img.shields.io/badge/Redux-Toolkit-764ABC?logo=redux&logoColor=white&style=for-the-badge)" alt="Redux">
-<img src="[https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss&logoColor=white&style=for-the-badge](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss&logoColor=white&style=for-the-badge)" alt="Tailwind CSS">
+<img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black&style=for-the-badge" alt="React 19">
+<img src="https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white&style=for-the-badge" alt="Node.js">
+<img src="https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white&style=for-the-badge" alt="Express">
+<img src="https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge" alt="MongoDB">
+<img src="https://img.shields.io/badge/Redux-Toolkit-764ABC?logo=redux&logoColor=white&style=for-the-badge" alt="Redux">
+<img src="https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss&logoColor=white&style=for-the-badge" alt="Tailwind CSS">
 </p>
 
 <p>
-<strong><a href="[LINK-DEMO-DEPLOY-CUA-BAN]">🚀 Xem Live Demo</a></strong>
+<strong><a href="https://github.com/phucthinh2704/Agri-Ecommerce">🚀 Xem Live Demo</a></strong>
 </p>
 
 </div>
-
----
-
-## 📸 Hình ảnh dự án
-
-Một vài hình ảnh về giao diện người dùng và trang quản trị.
-
-|  Trang chủ   |    Trang Chi tiết Sản phẩm     |
-| :----------: | :----------------------------: |
-|              |                                |
-| **Giỏ hàng** | **Trang Quản trị (Dashboard)** |
-|              |                                |
 
 ---
 
@@ -95,8 +83,8 @@ Dự án này được chia thành hai phần chính: Cổng thông tin cho ngư
 ### 1. Clone dự án
 
 ```bash
-git clone https://github.com/[TEN-USER-GITHUB-CUA-BAN]/[TEN-REPO-CUA-BAN].git
-cd [TEN-REPO-CUA-BAN]
+git clone https://github.com/phucthinh2704/Agri-Ecommerce.git
+cd Agri-Ecommerce
 ```
 
 ### 2. Cài đặt Backend (Thư mục `server`)
