@@ -518,7 +518,7 @@ const Header = ({
 
 						{/* User Section - Mobile */}
 						{user ? (
-							<div className="space-y-3">
+							<div className="space-y-2">
 								{/* User Info Mobile */}
 								<div className="flex items-center space-x-3 px-2 py-2 bg-gray-50 rounded-lg">
 									{user.avatar ? (
@@ -543,8 +543,16 @@ const Header = ({
 								</div>
 
 								{/* Mobile Menu Items */}
+								{user?.role === "admin" && (
+									<Link to={path.ADMIN}>
+										<button className="w-full px-4 py-2 text-left text-sm flex items-center space-x-2 cursor-pointer text-purple-700 hover:bg-purple-50 font-bold">
+											<LayoutDashboard className="w-4 h-4" />
+											<span>Trang quản trị</span>
+										</button>
+									</Link>
+								)}
 								<button
-									className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer"
+									className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer m-0"
 									onClick={() => {
 										onEditProfile(); // Gọi hàm từ props
 										setIsUserMenuOpen(false); // Đóng menu
@@ -553,7 +561,7 @@ const Header = ({
 									<span>Thông tin người dùng</span>
 								</button>
 								<button
-									className="w-full px-2 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded flex items-center space-x-2"
+									className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2 cursor-pointer m-0"
 									onClick={() =>
 										navigate(`/${path.MY_ORDERS}`)
 									}>
