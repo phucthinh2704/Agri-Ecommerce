@@ -50,7 +50,8 @@ const CheckoutPage = () => {
 	const { showSuccess } = useAlert();
 
 	// Tính phí vận chuyển
-	const FREE_SHIP_THRESHOLD = +import.meta.env.VITE_FREE_SHIP_THRESHOLD || 300000;
+	const FREE_SHIP_THRESHOLD =
+		+import.meta.env.VITE_FREE_SHIP_THRESHOLD || 300000;
 	const SHIPPING_FEE = +import.meta.env.VITE_SHIPPING_FEE || 30000;
 	const shippingFee = subtotal >= FREE_SHIP_THRESHOLD ? 0 : SHIPPING_FEE;
 	const totalAmount = subtotal + shippingFee;
@@ -136,6 +137,22 @@ const CheckoutPage = () => {
 		toast.error("Thanh toán thất bại.");
 	}, []);
 
+	const handlePhoneChange = (e) => {
+		const value = e.target.value;
+
+		// Regex: /^[0-9]*$/
+		// ^     : Bắt đầu chuỗi
+		// [0-9]*: Cho phép bất kỳ ký tự nào từ 0 đến 9, lặp lại 0 hoặc nhiều lần
+		// $     : Kết thúc chuỗi
+
+		// Nếu giá trị là rỗng HOẶC chỉ chứa số, thì cập nhật state
+		if (value === "" || /^[0-9]*$/.test(value)) {
+			setPhone(value);
+		}
+		// Nếu giá trị chứa chữ (hoặc ký tự đặc biệt), hàm sẽ không làm gì cả
+		// (ngăn không cho ký tự đó xuất hiện trong ô input)
+	};
+
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
 			<div className="max-w-7xl mx-auto px-4 py-8">
@@ -179,11 +196,9 @@ const CheckoutPage = () => {
 										<input
 											type="tel"
 											value={phone}
-											onChange={(e) =>
-												setPhone(e.target.value)
-											}
+											onChange={handlePhoneChange}
 											className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-											placeholder="0901234567"
+											placeholder="0987654321"
 										/>
 									</div>
 								</div>
@@ -288,7 +303,7 @@ const CheckoutPage = () => {
 
 									{paymentMethod === "paypal" && (
 										<div className="mt-4 pt-4 border-t border-green-200">
-											{!isFormValid ? (
+											{!isFormValid && (
 												<div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
 													<p className="text-sm text-amber-800 text-center">
 														Vui lòng điền đầy đủ
@@ -296,45 +311,45 @@ const CheckoutPage = () => {
 														trước khi thanh toán
 													</p>
 												</div>
-											) : (
-												<>
-													{isPending && (
-														<PayPalSpinner />
-													)}
-													<div
-														style={{
-															display: isPending
-																? "none"
-																: "block",
-														}}>
-														<PayPalButtons
-															style={{
-																layout: "vertical",
-																shape: "pill",
-																label: "pay",
-															}}
-															createOrder={
-																createOrder
-															}
-															onApprove={
-																onApprove
-															}
-															onError={onError}
-															forceReRender={[
-																totalAmount,
-															]}
-														/>
-													</div>
-													{paypalError && (
-														<div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg mt-3">
-															<AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-															<p className="text-sm text-red-800">
-																{paypalError}
-															</p>
-														</div>
-													)}
-												</>
 											)}
+											<div
+												className={
+													isFormValid
+														? "block"
+														: "hidden"
+												}>
+												{isPending && <PayPalSpinner />}
+												<div
+													style={{
+														display: isPending
+															? "none"
+															: "block",
+													}}>
+													<PayPalButtons
+														style={{
+															layout: "vertical",
+															shape: "pill",
+															label: "pay",
+														}}
+														createOrder={
+															createOrder
+														}
+														onApprove={onApprove}
+														onError={onError}
+														forceReRender={[
+															totalAmount,
+														]}
+													/>
+												</div>
+												{paypalError && (
+													<div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg mt-3">
+														<AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+														<p className="text-sm text-red-800">
+															{paypalError}
+														</p>
+													</div>
+												)}
+											</div>
 										</div>
 									)}
 								</div>
