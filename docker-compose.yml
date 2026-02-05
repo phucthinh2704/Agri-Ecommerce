@@ -1,35 +1,17 @@
 version: "3.8"
 
 services:
-    # --- SERVER (BACKEND) ---
     server:
         build: ./server
         container_name: agri_server
         ports:
-            - "5000:5000" # Map cổng 5000 của container ra 5000 của máy thật
-        environment:
-            - PORT=5000
-            # Kết nối trực tiếp tới MongoDB Atlas Cloud
-            - MONGODB_URI=mongodb+srv://thinhphuc2704_db_user:F2NwEb4OGgP8xfFf@cluster0.eva76tc.mongodb.net/agri-ecommerce
-            - JWT_SECRET=bdjkahdabsjdasakjksalqoeycbz
-            - EMAIL_APP_PASSWORD=rdxhpwoegqtzlizq
-            - EMAIL_NAME=thinhphuc2704@gmail.com
-            # Vì chạy Docker map port ra localhost máy thật, nên để localhost là ĐÚNG
-            - SERVER_URL=http://localhost:5000
-            - CLIENT_URL=http://localhost:5173
-            - LIMIT_PRODUCTS=12
-            - SHIPPING_FEE=30000
-            - FREE_SHIP_THRESHOLD=300000
-            - GOOGLE_CLIENT_ID=455771483307-em2ckre0k2goq78m4m6fop9npaodo0rc.apps.googleusercontent.com
-            - CLOUDINARY_NAME=ddfi4fdao
-            - CLOUDINARY_KEY=881294296911933
-            - CLOUDINARY_SECRET=JSPXivPJ0om1AVXl5CyeInjvfmQ
-            - CLOUDINARY_FOLDER=cuahangnongsan
+            - "5000:5000"
+        env_file:
+            - ./server/.env
         volumes:
             - ./server:/app
             - /app/node_modules
 
-    # --- CLIENT (FRONTEND) ---
     client:
         build: ./client
         container_name: agri_client
@@ -37,13 +19,8 @@ services:
             - "5173:5173"
         depends_on:
             - server
-        environment:
-            # React chạy ở trình duyệt người dùng, nên gọi API qua localhost máy thật là ĐÚNG
-            - VITE_API_URL=http://localhost:5000/api
-            - VITE_GOOGLE_CLIENT_ID=455771483307-em2ckre0k2goq78m4m6fop9npaodo0rc.apps.googleusercontent.com
-            - VITE_PAYPAL_CLIENT_ID=AWqowxbS9iPXhe-hQdyCj-HcUciUzH2qWyYjoCNyTKIamJ0ar1ajqNgVkbJKR8QXKrIvM_z5X8vZA-wb
-            - VITE_SHIPPING_FEE=30000
-            - VITE_FREE_SHIP_THRESHOLD=300000
+        env_file:
+            - ./client/.env
         volumes:
             - ./client:/app
             - /app/node_modules
