@@ -8,6 +8,7 @@ export { default as BannerSlider } from "./BannerSlider";
 export { default as BlogSection } from "./BlogSection";
 export { default as CategoryCard } from "./CategoryCard";
 export { default as CategorySection } from "./CategorySection";
+export { default as Chatbot } from "./Chatbot";
 export { default as Footer } from "./Footer";
 export { default as GoogleButton } from "./GoogleButton";
 export { default as Header } from "./Header";

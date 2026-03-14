@@ -9,6 +9,7 @@ import {
 	ScrollToTop,
 	ProfileModal,
 	ScrollToTopButton,
+	Chatbot,
 } from "../components";
 import useAlert from "../hooks/useAlert";
 import { logoutUser } from "../store/auth";
@@ -80,7 +81,8 @@ const PublicLayout = () => {
 
 			{/* Footer luôn hiển thị */}
 			<Footer />
-
+			
+			<Chatbot />
 			<ScrollToTopButton />
 
 			{user && (

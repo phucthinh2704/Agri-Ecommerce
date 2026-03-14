@@ -5,6 +5,7 @@ const orderRouter = require("./order.route");
 const cartRouter = require("./cart.route");
 const insertRouter = require("./insert.route");
 const uploadRouter = require("./upload.route");
+const chatbotRouter = require("./chatbot.route");
 const { notFound, errorHandler } = require("../middlewares/error-handler");
 
 const initRoutes = (app) => {
@@ -15,6 +16,7 @@ const initRoutes = (app) => {
 	app.use("/api/cart", cartRouter);
 	app.use("/api/insert", insertRouter);
 	app.use("/api/upload", uploadRouter);
+	app.use("/api/chatbot", chatbotRouter);
 
 	app.use(notFound);
 	app.use(errorHandler);

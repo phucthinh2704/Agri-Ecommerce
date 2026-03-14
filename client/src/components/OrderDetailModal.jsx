@@ -107,7 +107,7 @@ const OrderDetailModal = ({ order, onClose, onCancelOrder }) => {
 						<div>
 							<h2 className="text-xl font-bold text-white">Chi tiết đơn hàng</h2>
 							<p className="text-sm text-green-100">
-								#{order._id.slice(-8).toUpperCase()}
+								#{order._id.toUpperCase()}
 							</p>
 						</div>
 					</div>
